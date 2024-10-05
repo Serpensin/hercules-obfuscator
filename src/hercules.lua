@@ -54,7 +54,7 @@ local function print_final(input_file, output_file, time_taken, overwrite, custo
     print(line)
 
     local control_flow_enabled = config.get("settings.control_flow.enabled")
-    local string_encoding_enabled = config.get("settings.string_encoding.enabled")
+    local caesar_cipher_enabled = config.get("settings.caesar_cipher.enabled")
     local variable_renaming_enabled = config.get("settings.variable_renaming.enabled")
     local garbage_code_enabled = config.get("settings.garbage_code.enabled")
     local opaque_predicates_enabled = config.get("settings.opaque_predicates.enabled")
@@ -63,7 +63,7 @@ local function print_final(input_file, output_file, time_taken, overwrite, custo
     local bytecode_encoding_enabled = config.get("settings.bytecode_encoding.enabled")
 
     print(colors.white .. "Control Flow      : " .. (control_flow_enabled and colors.green .. "Enabled" .. colors.reset or colors.red .. "Disabled" .. colors.reset))
-    print(colors.white .. "String Encoding   : " .. (string_encoding_enabled and colors.green .. "Enabled" .. colors.reset or colors.red .. "Disabled" .. colors.reset))
+    print(colors.white .. "Caesar Cipher     : " .. (caesar_cipher_enabled and colors.green .. "Enabled" .. colors.reset or colors.red .. "Disabled" .. colors.reset))
     print(colors.white .. "Variable Renaming : " .. (variable_renaming_enabled and colors.green .. "Enabled" .. colors.reset or colors.red .. "Disabled" .. colors.reset))
     print(colors.white .. "Garbage Code      : " .. (garbage_code_enabled and colors.green .. "Enabled" .. colors.reset or colors.red .. "Disabled" .. colors.reset))
     print(colors.white .. "Opaque Predicates : " .. (opaque_predicates_enabled and colors.green .. "Enabled" .. colors.reset or colors.red .. "Disabled" .. colors.reset))
@@ -139,4 +139,7 @@ file = io.open(output_file, "w")
 file:write(obfuscated_code)
 file:close()
 
-print_final(input_file, output_file, time_taken, overwrite, custom_pipeline_file)
+final_print = config.get("settings.final_print")
+if final_print then
+    print_final(input_file, output_file, time_taken, overwrite, custom_pipeline_file)
+end

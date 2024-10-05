@@ -4,17 +4,19 @@ local config = {}
 
 config.settings = {
     output_suffix = "_obfuscated.lua",
-    watermark_enabled = true,
+    final_print = false,
+    compressor = {
+        enabled = true,
+    },
     control_flow = {
         enabled = true,
         max_fake_blocks = 6,
     },
-    string_encoding = {
-        enabled = false, --off because bugged
-        encoding_type = 'base64',
+    caesar_cipher = {
+        enabled = true,
     },
     variable_renaming = {
-        enabled = true,
+        enabled = false,
         min_name_length = 8,
         max_name_length = 16,
     },
@@ -26,10 +28,10 @@ config.settings = {
         enabled = true,
     },
     function_inlining = {
-        enabled = false, --off because bugged
+        enabled = false, -- off because bugged
     },
     dynamic_code = {
-        enabled = false, --off because bugged
+        enabled = false, -- off because bugged
     },
     bytecode_encoding = {
         enabled = true,
@@ -51,4 +53,3 @@ function config.get(key)
 end
 
 return config
-

@@ -1,6 +1,6 @@
 local config = require("config")
 
-local StringEncoder = require("modules/string_encoder")
+local CaesarCipher = require("modules/caesar_cipher")
 local VariableRenamer = require("modules/variable_renamer")
 local ControlFlowObfuscator = require("modules/control_flow_obfuscator")
 local GarbageCodeInserter = require("modules/garbage_code_inserter")
@@ -8,15 +8,14 @@ local OpaquePredicateInjector = require("modules/opaque_predicate_injector")
 local FunctionInliner = require("modules/function_inliner")
 local DynamicCodeGenerator = require("modules/dynamic_code_generator")
 local BytecodeEncoder = require("modules/bytecode_encoder")
-local Watermarker = require("modules/watermark")
+local Compressor = require("modules/compressor")
 
 local Pipeline = {}
 
 function Pipeline.process(code)
-    -- String Encoding (DELETION SOON)
-    if config.get("settings.string_encoding.enabled") then
-        local encoding_type = config.get("settings.string_encoding.encoding_type")
-        code = StringEncoder.process(code, encoding_type)
+    -- Caesar Cipher
+    if config.get("settings.caesar_cipher.enabled") then
+        code = CaesarCipher.process(code)
     end
 
     -- Variable Renaming
@@ -58,9 +57,9 @@ function Pipeline.process(code)
         code = BytecodeEncoder.process(code)
     end
 
-    -- Watermarking
-    if config.get("settings.watermark_enabled") then
-        code = Watermarker.process(code)
+    -- Compressor
+    if config.get("settings.compressor.enabled") then
+        code = Compressor.process(code)
     end
 
     return code
